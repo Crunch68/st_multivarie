@@ -43,36 +43,65 @@
              lty = 1,
              lwd = 2)
 
-  # Séries présentent des tendances et des changements structurels
+  # Séries présentent des tendances avec des variations importantes
+    # Transformation en log permettra de lisser ses variations
+      
+# Transformation des séries en log
+  # Nouvelles séries
+    l_prod_ep = log(prod_ep)
+    l_import_ep = log(import_ep)
+    l_cons_ep = log(cons_ep)
+    
+  # Nouveaux graphiques
+    # Graphiques séparés
+      layout(matrix(1:3, 1, 3))
+      plot(l_prod_ep, main = "Logarithme de la production totale d'énergie primaire aux USA", xlab = "Années", ylab = "Quadrillons de Btu")
+      plot(l_import_ep, main = "Logarithme des importations d'énergie primaire aux USA", xlab = "Années", ylab = "Quadrillons de Btu")
+      plot(l_cons_ep, main = "Logarithme de la Consommation totale d'énergie primaire aux USA", xlab = "Années", ylab = "Quadrillons de Btu")
+    
+    # Graphique
+      plot(l_prod_ep, col = "blue", lwd = 2, ylim = range(c(l_prod_ep, l_import_ep, l_cons_ep)),
+           xlab = "Années", ylab = "Quadrillons de Btu", main = "Log des séries - énergie primaire aux USA (1949-2024)")
+      
+      # Ajout des autres séries
+        lines(l_import_ep, col = "red", lwd = 2)
+        lines(l_cons_ep, col = "green", lwd = 2)
+        
+      # Légende
+        legend("bottomright",
+               legend = c("l_prod_ep", "l_import_ep", "l_cons_ep"),
+               col = c("blue", "red", "green"),
+               lty = 1,
+               lwd = 2)
     
 
       
-# Corrélogrammes sur les séries en niveau
+# Corrélogrammes sur le log des séries en niveau
   layout(matrix(1:6,3,2))
-  acf(c(prod_ep),lag.max= 70, plot = TRUE, col="cyan")
-  acf(c(import_ep),lag.max= 70,plot = TRUE, col="cyan")
-  acf(c(cons_ep),lag.max= 70, plot = TRUE, col="cyan")
-  pacf(c(prod_ep),lag.max= 70,plot = TRUE, col="red", main="")
-  pacf(c(import_ep),lag.max= 70, plot = TRUE, col="red", main="")
-  pacf(c(cons_ep),lag.max= 70,plot = TRUE, col="red", main="")
+  acf(c(l_prod_ep),lag.max= 70, plot = TRUE, col="cyan")
+  acf(c(l_import_ep),lag.max= 70,plot = TRUE, col="cyan")
+  acf(c(l_cons_ep),lag.max= 70, plot = TRUE, col="cyan")
+  pacf(c(l_prod_ep),lag.max= 70,plot = TRUE, col="red", main="")
+  pacf(c(l_import_ep),lag.max= 70, plot = TRUE, col="red", main="")
+  pacf(c(l_cons_ep),lag.max= 70,plot = TRUE, col="red", main="")
     # Séries non-stationnaires en niveau
-      # Présentent des retournements (parfois tardifs), ce qui laisse penser à d'éventuels changements structurels
+      # Présentent des retournements (parfois tardifs), ce qui laisse penser à d'éventuels changements structurels ou dynamiques e long terme
 
   
   
-# Corrélogrammes sur les séries en différences premières
+# Corrélogrammes sur les séries (en log) en différences premières
   # Transformation des séries en différences premières
-    prod_ep_diff1 <- diff(prod_ep)
-    import_ep_diff1 <- diff(import_ep)
-    cons_ep_diff1 <- diff(cons_ep)
+    l_prod_ep_diff1 <- diff(l_prod_ep)
+    l_import_ep_diff1 <- diff(l_import_ep)
+    l_cons_ep_diff1 <- diff(l_cons_ep)
   
   # Visualisation
     layout(matrix(1:6,3,2))
-    acf(c(prod_ep_diff1),lag.max= 70, plot = TRUE, col="cyan")
-    acf(c(import_ep_diff1),lag.max= 70,plot = TRUE, col="cyan")
-    acf(c(cons_ep_diff1),lag.max= 70, plot = TRUE, col="cyan")
-    pacf(c(prod_ep_diff1),lag.max= 70,plot = TRUE, col="red", main="")
-    pacf(c(import_ep_diff1),lag.max= 70, plot = TRUE, col="red", main="")
-    pacf(c(cons_ep_diff1),lag.max= 70,plot = TRUE, col="red", main="")
-      # Séries stationnaires en différences premières
+    acf(c(l_prod_ep_diff1),lag.max= 70, plot = TRUE, col="cyan")
+    acf(c(l_import_ep_diff1),lag.max= 70,plot = TRUE, col="cyan")
+    acf(c(l_cons_ep_diff1),lag.max= 70, plot = TRUE, col="cyan")
+    pacf(c(l_prod_ep_diff1),lag.max= 70,plot = TRUE, col="red", main="")
+    pacf(c(l_import_ep_diff1),lag.max= 70, plot = TRUE, col="red", main="")
+    pacf(c(l_cons_ep_diff1),lag.max= 70,plot = TRUE, col="red", main="")
+      # Log des séries stationnaires en différences premières
     
