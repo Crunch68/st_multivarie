@@ -1,11 +1,14 @@
 # Librairies utiles
   library(readxl)
 
+
 # Importation des séries
   series_energie_primaire <- read_excel("data/raw/series_energie_primaire.xlsx", col_names = TRUE, col_types = NULL)
 
   View(series_energie_primaire)
 
+
+  
 # Création des séries temporelles
   # Production totale d'énergie primaire
     prod_ep <- ts(series_energie_primaire[,2], start = c(1949), end = c(2024))
@@ -16,6 +19,8 @@
   # Consommation totale d'énergie primaire
     cons_ep <- ts(series_energie_primaire[,4], start = c(1949), end = c(2024))
   
+
+    
 # Visualisation graphique
   # Graphiques séparés
     layout(matrix(1:3, 1, 3))
@@ -40,17 +45,21 @@
 
   # Séries présentent des tendances et des changements structurels
     
+
+      
 # Corrélogrammes sur les séries en niveau
   layout(matrix(1:6,3,2))
   acf(c(prod_ep),lag.max= 70, plot = TRUE, col="cyan")
   acf(c(import_ep),lag.max= 70,plot = TRUE, col="cyan")
   acf(c(cons_ep),lag.max= 70, plot = TRUE, col="cyan")
-  pacf(c(prod_ep),lag.max= 70,plot = TRUE, col="red", main=element_blank())
-  pacf(c(import_ep),lag.max= 70, plot = TRUE, col="red", main=element_blank())
-  pacf(c(cons_ep),lag.max= 70,plot = TRUE, col="red", main=element_blank())
+  pacf(c(prod_ep),lag.max= 70,plot = TRUE, col="red", main="")
+  pacf(c(import_ep),lag.max= 70, plot = TRUE, col="red", main="")
+  pacf(c(cons_ep),lag.max= 70,plot = TRUE, col="red", main="")
     # Séries non-stationnaires en niveau
-      # Présentent des retournements (parfois tardifs), ce qui laisse à penser à des changements structurels (coïncide avec la lecture graphique)
+      # Présentent des retournements (parfois tardifs), ce qui laisse penser à d'éventuels changements structurels
 
+  
+  
 # Corrélogrammes sur les séries en différences premières
   # Transformation des séries en différences premières
     prod_ep_diff1 <- diff(prod_ep)
@@ -62,8 +71,8 @@
     acf(c(prod_ep_diff1),lag.max= 70, plot = TRUE, col="cyan")
     acf(c(import_ep_diff1),lag.max= 70,plot = TRUE, col="cyan")
     acf(c(cons_ep_diff1),lag.max= 70, plot = TRUE, col="cyan")
-    pacf(c(prod_ep_diff1),lag.max= 70,plot = TRUE, col="red", main=element_blank())
-    pacf(c(import_ep_diff1),lag.max= 70, plot = TRUE, col="red", main=element_blank())
-    pacf(c(cons_ep_diff1),lag.max= 70,plot = TRUE, col="red", main=element_blank())
+    pacf(c(prod_ep_diff1),lag.max= 70,plot = TRUE, col="red", main="")
+    pacf(c(import_ep_diff1),lag.max= 70, plot = TRUE, col="red", main="")
+    pacf(c(cons_ep_diff1),lag.max= 70,plot = TRUE, col="red", main="")
       # Séries stationnaires en différences premières
     
